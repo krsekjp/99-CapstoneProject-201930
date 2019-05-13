@@ -29,11 +29,24 @@ def get_my_frame(root, window, mqtt_sender):
     spin_left_button = ttk.Button(frame, text = 'Spin Left')
     spin_left_button.grid(row = 0, column = 0)
 
+    entry_box_left_speed = ttk.Entry(frame)
+    entry_box_left_speed.insert(0,'100')
+    entry_box_left_speed.grid(row=1,column=0)
+
+    entry_box_left_distance = ttk.Entry(frame)
+    entry_box_left_distance.insert(0, '100')
+    entry_box_left_distance.grid(row=2, column=0)
+
     spin_right_button = ttk.Button(frame, text = 'Spin Right')
     spin_right_button.grid(row = 0, column = 1)
 
+    entry_box_right_distance = ttk.Entry(frame)
+    entry_box_right_distance.insert(0, '100')
+    entry_box_right_distance.grid(row=2, column=1)
 
-
+    entry_box_right_speed = ttk.Entry(frame)
+    entry_box_right_speed.insert(0, '100')
+    entry_box_right_speed.grid(row=1, column=1)
 
     # Return your frame:
     return frame
@@ -56,6 +69,7 @@ class MyLaptopDelegate(object):
 
 
 # TODO: Add functions here as needed.
-def spin_left(speed_l,distance_l):
+#def spin_left(speed_l,distance_l):
 
-def spin_right(speed_r,distance_r):
+
+#def spin_right(speed_r,distance_r):
