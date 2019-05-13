@@ -70,4 +70,6 @@ class MyLaptopDelegate(object):
 def go_forward(forward_inches, forward_speed, mqtt_sender):
     inches = int(forward_inches.get())
     speed = int(forward_speed.get())
+    print()
+    print('Sending a message to the robot to go forward', inches,'inches forward at a speed of', speed)
     mqtt_sender.send_message('forward',[inches, speed])

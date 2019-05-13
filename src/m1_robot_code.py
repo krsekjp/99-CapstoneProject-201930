@@ -39,6 +39,7 @@ class MyRobotDelegate(object):
             if self.robot.drive_system.right_motor.get_position >= inches:
             break
 
+
 def print_message_received(method_name, arguments):
     print()
     print("The robot's delegate has received a message")
