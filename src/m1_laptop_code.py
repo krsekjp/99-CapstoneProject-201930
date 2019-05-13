@@ -34,8 +34,11 @@ def get_my_frame(root, window, mqtt_sender):
 
     forward_dist_button.grid(row=3, column=0)
     backward_dist_button.grid(row=7, column=0)
+    forward_inches_label.grid(row=3, column=2)
+    backward_inches_label.grid(row=7, column=2)
+    forward_inches.grid(row=4, column=2)
+    backward_inches.grid(row=8,column=2)
 
-    forward_inches.grid()
 
     # Return your frame:
     return frame
