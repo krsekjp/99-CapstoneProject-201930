@@ -28,8 +28,8 @@ def get_my_frame(root, window, mqtt_sender):
     forward_dist_button = ttk.Button(frame, text="Go Forward Distance")
     backward_dist_button = ttk.Button(frame, text="Go Backward Distance")
 
-    forward_dist_button.grid(row=3, column=1)
-    backward_dist_button.grid(row=5, column=1)
+    forward_dist_button.grid(row=3, column=0)
+    backward_dist_button.grid(row=5, column=0)
 
     # Return your frame:
     return frame
