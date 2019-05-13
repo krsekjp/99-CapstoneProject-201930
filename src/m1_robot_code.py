@@ -33,9 +33,11 @@ class MyRobotDelegate(object):
 
     # TODO: Add methods here as needed.
 
-# def forward(self,speed, inches):
-#     while True:
-#         if self.robot.drive_system.right_motor.get_position >= inches:
+    def forward(self, inches, speed):
+        self.robot.drive_system.go(speed, speed)
+        while True:
+            if self.robot.drive_system.right_motor.get_position >= inches:
+            break
 
 def print_message_received(method_name, arguments):
     print()

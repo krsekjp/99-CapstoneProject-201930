@@ -31,6 +31,8 @@ def get_my_frame(root, window, mqtt_sender):
     backward_inches_label = ttk.Label(frame, text="Inches")
     forward_inches = ttk.Entry(frame, width=6)
     backward_inches = ttk.Entry(frame, width=6)
+    forward_speed_label = ttk.Label(frame, text="Speed")
+    forward_speed = ttk.Entry(frame, width=6)
 
     forward_dist_button.grid(row=3, column=0)
     backward_dist_button.grid(row=7, column=0)
@@ -38,6 +40,10 @@ def get_my_frame(root, window, mqtt_sender):
     backward_inches_label.grid(row=7, column=2)
     forward_inches.grid(row=4, column=2)
     backward_inches.grid(row=8,column=2)
+    forward_speed_label.grid(row=3, column=4)
+    forward_speed.grid(row=4, column=4)
+
+    forward_dist_button["command"] = lambda: go_forward(forward_inches, forward_speed, mqtt_sender)
 
 
     # Return your frame:
@@ -61,3 +67,7 @@ class MyLaptopDelegate(object):
 
 
 # TODO: Add functions here as needed.
+def go_forward(forward_inches, forward_speed, mqtt_sender):
+    inches = int(forward_inches.get())
+    speed = int(forward_speed.get())
+    mqtt_sender.send_message('forward',[inches, speed])
