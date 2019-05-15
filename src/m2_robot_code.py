@@ -34,8 +34,10 @@ class MyRobotDelegate(object):
     # TODO: Add methods here as needed.
 
     def spinr(self,right_speed,right_distance):
+        self.robot.drive_system.right_motor.reset_position()
         speed = right_speed
-        self.robot.drive_system.right_motor.turn_on(speed)
+        self.robot.drive_system.right_motor.turn_on()
+        self.robot.drive_system.go(0,speed)
         number_rotations = int(self.robot.drive_system.right_motor.get_position())
         while True:
             if number_rotations >= right_distance:
@@ -43,7 +45,9 @@ class MyRobotDelegate(object):
 
     def spinl(self,left_speed,left_distance):
         speed = left_speed
-        self.robot.drive_system.left_motor.turn_on(speed)
+        self.robot.drive_system.left_motor.reset_position()
+        self.robot.drive_system.left_motor.turn_on()
+        self.robot.drive_system.go(speed,0)
         number_rotations = int(self.robot.drive_system.left_motor.get_position())
         while True:
             if number_rotations >= left_distance:
