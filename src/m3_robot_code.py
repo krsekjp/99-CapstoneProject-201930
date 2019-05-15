@@ -1,10 +1,10 @@
 """
   Capstone Project.  Code to run on the EV3 robot (NOT on a laptop).
   Author:  Your professors (for the framework)
-    and PUT_YOUR_NAME_HERE.
+    and Jacob Murray.
   Spring term, 2018-2019.
 """
-# TODO 1:  Put your name in the above.
+# Done 1:  Put your name in the above.
 
 import mqtt_remote_method_calls as mqtt
 import rosebot
@@ -27,6 +27,53 @@ class MyRobotDelegate(object):
         self.mqtt_sender = mqtt_sender
 
     # TODO: Add methods here as needed.
+    def arm_up(self, speed):
+        print_message_received('arm_up', [speed])
+        real_speed = int(speed)
+        self.robot.arm_and_claw.motor.turn_on(real_speed)
+        while True:
+            ans = self.robot.arm_and_claw.touch_sensor.is_pressed()
+            if ans == True:
+                self.robot.arm_and_claw.motor.turn_off()
+                break
+
+    def arm_calibrate(self, speed):
+        print_message_received('arm_calibrate', [speed])
+        self.arm_up(speed)
+        self.robot.arm_and_claw.motor.turn_on(-speed)
+        while True:
+            ans_deg = self.robot.arm_and_claw.motor.get_position()
+            if ans_deg == 14.2 * 360:
+                self.robot.arm_and_claw.motor.turn_off()
+                break
+        self.robot.arm_and_claw.motor.reset_position()
+
+    def arm_to(self, position, speed):
+        print_message_received('arm_to', [position])
+        new_pos = self.robot.arm_and_claw.motor.get_position()
+        rel_pos = (position / 360) - int(position / 360)
+        if rel_pos <= 0.5:
+            self.robot.arm_and_claw.motor.turn_on(speed)
+        else:
+            self.robot.arm_and_claw.motor.turn_on(-speed)
+        while True:
+            if new_pos == rel_pos * 360:
+                self.robot.arm_and_claw.motor.turn_off()
+                break
+
+    def arm_down(self, speed):
+        print_message_received('arm_down', [speed])
+        self.arm_to(0, speed)
+
+
+
+
+
+
+
+
+
+
 
 
 def print_message_received(method_name, arguments=None):
