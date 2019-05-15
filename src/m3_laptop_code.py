@@ -36,6 +36,7 @@ def get_my_frame(root, window, mqtt_sender):
     calibrate_arm_button.grid(row = 1, column = 0)
     arm_calibrate_speed = ttk.Entry(frame, width=8)
     arm_calibrate_speed.insert(0, '100')
+    arm_calibrate_speed.grid(row = 1, column = 1)
     #calibrate_arm_button["command"] = lambda:
 
     arm_to_button = ttk.Button(frame, text='Move Arm')
