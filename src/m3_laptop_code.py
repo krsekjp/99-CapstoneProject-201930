@@ -78,24 +78,24 @@ class MyLaptopDelegate(object):
 
 # TODO: Add functions here as needed.
 def handle_arm_up(arm_up_speed, mqtt_sender):
-    speed = arm_up_speed.get()
+    speed = int(arm_up_speed.get())
     print('arm_up message:', arm_up_speed)
     mqtt_sender.send_message('arm_up', [speed])
 
 
 def handle_arm_calibrate(arm_calibrate_speed, mqtt_sender):
-    speed = arm_calibrate_speed.get()
+    speed = int(arm_calibrate_speed.get())
     print('arm_calibrate message:', speed)
     mqtt_sender.send_message('arm_calibrate', [speed])
 
 
 def handle_arm_to(arm_to_speed, mqtt_sender):
-    speed = arm_to_speed.get()
+    speed = int(arm_to_speed.get())
     print('arm_to message:', speed)
     mqtt_sender.send_message('arm_to', [speed])
 
 
 def handle_arm_down(arm_down_speed, mqtt_sender):
-    speed = arm_down_speed.get()
+    speed = int(arm_down_speed.get())
     print('arm_down message:', speed)
     mqtt_sender.send_message('arm_down', [speed])
