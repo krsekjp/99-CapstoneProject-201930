@@ -30,14 +30,14 @@ def get_my_frame(root, window, mqtt_sender):
     arm_up_speed = ttk.Entry(frame, width = 8)
     arm_up_speed.insert(0, '100')
     arm_up_speed.grid(row = 0, column = 1)
-    arm_up_button["command"] = lambda: handle_arm_up()
+    arm_up_button["command"] = lambda: handle_arm_up(arm_up_speed.get())
 
     calibrate_arm_button = ttk.Button(frame, text='Calibrate Arm')
     calibrate_arm_button.grid(row = 1, column = 0)
     arm_calibrate_speed = ttk.Entry(frame, width=8)
     arm_calibrate_speed.insert(0, '100')
     arm_calibrate_speed.grid(row = 1, column = 1)
-    calibrate_arm_button["command"] = lambda: handle_arm_calibrate()
+    calibrate_arm_button["command"] = lambda: handle_arm_calibrate(arm_calibrate_speed.get())
 
     arm_to_button = ttk.Button(frame, text='Move Arm')
     arm_to_button.grid(row = 2, column = 0)
@@ -54,7 +54,7 @@ def get_my_frame(root, window, mqtt_sender):
     arm_down_speed = ttk.Entry(frame, width = 8)
     arm_down_speed.insert(0, '100')
     arm_down_speed.grid(row = 3, column = 1)
-    arm_down_button["command"] = lambda: handle_arm_down()
+    arm_down_button["command"] = lambda: handle_arm_down(arm_down_speed.get())
 
     # Return your frame:
     return frame
