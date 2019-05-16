@@ -91,7 +91,7 @@ def handle_arm_calibrate(arm_calibrate_speed, mqtt_sender):
 
 def handle_arm_to(arm_to_position, arm_to_speed, mqtt_sender):
     speed = int(arm_to_speed.get())
-    position = int(arm_to_position.get())
+    position = float(arm_to_position.get())
     print('arm_to message:', position, 'at speed', speed)
     mqtt_sender.send_message('arm_to', [position, speed])
 
