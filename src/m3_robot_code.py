@@ -42,11 +42,10 @@ class MyRobotDelegate(object):
         self.robot.arm_and_claw.motor.turn_on(-speed)
         while True:
             ans_deg = self.robot.arm_and_claw.motor.get_position()
-            if ans_deg >= 14.2 * 360:
+            if ans_deg <= 14.2 * 360:
                 self.robot.arm_and_claw.motor.turn_off()
                 self.robot.arm_and_claw.motor.reset_position()
                 break
-
 
     def arm_to(self, position, speed):
         print_message_received('arm_to', [position])
@@ -65,7 +64,6 @@ class MyRobotDelegate(object):
                 if cur_pos <= position:
                     self.robot.arm_and_claw.motor.turn_off()
                     break
-
 
     def arm_down(self, speed):
         print_message_received('arm_down', [speed])
