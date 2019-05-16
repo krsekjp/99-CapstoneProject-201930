@@ -29,8 +29,7 @@ class MyRobotDelegate(object):
     # TODO: Add methods here as needed.
     def arm_up(self, speed):
         print_message_received('arm_up', [speed])
-        real_speed = int(speed)
-        self.robot.arm_and_claw.motor.turn_on(real_speed)
+        self.robot.arm_and_claw.motor.turn_on(speed)
         while True:
             ans = self.robot.arm_and_claw.touch_sensor.is_pressed()
             if ans == True:
@@ -45,8 +44,9 @@ class MyRobotDelegate(object):
             ans_deg = self.robot.arm_and_claw.motor.get_position()
             if ans_deg >= 14.2 * 360:
                 self.robot.arm_and_claw.motor.turn_off()
+                self.robot.arm_and_claw.motor.reset_position()
                 break
-        self.robot.arm_and_claw.motor.reset_position()
+
 
     def arm_to(self, position, speed):
         print_message_received('arm_to', [position])
