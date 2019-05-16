@@ -95,4 +95,4 @@ def handle_arm_to(arm_to_speed, mqtt_sender):
 def handle_arm_down(arm_down_speed, mqtt_sender):
     speed = arm_down_speed.get()
     print('arm_down message:', speed)
-    mqtt_sender.send_message('arm_to', [speed])
+    mqtt_sender.send_message('arm_down', [speed])
