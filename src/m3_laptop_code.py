@@ -30,14 +30,14 @@ def get_my_frame(root, window, mqtt_sender):
     arm_up_speed = ttk.Entry(frame, width = 8)
     arm_up_speed.insert(0, '100')
     arm_up_speed.grid(row = 0, column = 1)
-    arm_up_button["command"] = lambda: handle_arm_up(arm_up_speed.get(), mqtt_sender)
+    arm_up_button["command"] = lambda: handle_arm_up(arm_up_speed, mqtt_sender)
 
     calibrate_arm_button = ttk.Button(frame, text='Calibrate Arm')
     calibrate_arm_button.grid(row = 1, column = 0)
     arm_calibrate_speed = ttk.Entry(frame, width=8)
     arm_calibrate_speed.insert(0, '100')
     arm_calibrate_speed.grid(row = 1, column = 1)
-    calibrate_arm_button["command"] = lambda: handle_arm_calibrate(arm_calibrate_speed.get(), mqtt_sender)
+    calibrate_arm_button["command"] = lambda: handle_arm_calibrate(arm_calibrate_speed, mqtt_sender)
 
     arm_to_button = ttk.Button(frame, text='Move Arm')
     arm_to_button.grid(row = 2, column = 0)
@@ -45,16 +45,15 @@ def get_my_frame(root, window, mqtt_sender):
     arm_to_speed.insert(0, '100')
     arm_to_speed.grid(row = 2, column = 2)
     arm_to_position = ttk.Entry(frame, width = 8)
-
     arm_to_position.grid(row = 2, column = 1)
-    arm_to_button["command"] = lambda: handle_arm_to(arm_to_position.get(), arm_to_speed.get(), mqtt_sender)
+    arm_to_button["command"] = lambda: handle_arm_to(arm_to_position, arm_to_speed, mqtt_sender)
 
     arm_down_button = ttk.Button(frame, text='Arm Down')
     arm_down_button.grid(row = 3, column = 0)
     arm_down_speed = ttk.Entry(frame, width = 8)
     arm_down_speed.insert(0, '100')
     arm_down_speed.grid(row = 3, column = 1)
-    arm_down_button["command"] = lambda: handle_arm_down(arm_down_speed.get(), mqtt_sender)
+    arm_down_button["command"] = lambda: handle_arm_down(arm_down_speed, mqtt_sender)
 
     # Return your frame:
     return frame
@@ -89,10 +88,11 @@ def handle_arm_calibrate(arm_calibrate_speed, mqtt_sender):
     mqtt_sender.send_message('arm_calibrate', [speed])
 
 
-def handle_arm_to(arm_to_speed, mqtt_sender):
+def handle_arm_to(arm_to_position, arm_to_speed, mqtt_sender):
     speed = int(arm_to_speed.get())
+    position = int(arm_to_position.get())
     print('arm_to message:', speed)
-    mqtt_sender.send_message('arm_to', [speed])
+    mqtt_sender.send_message('arm_to', [position, speed])
 
 
 def handle_arm_down(arm_down_speed, mqtt_sender):
