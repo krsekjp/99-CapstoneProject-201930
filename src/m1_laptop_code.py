@@ -25,6 +25,8 @@ def get_my_frame(root, window, mqtt_sender):
 
     # Add the rest of your GUI to your frame:
     # TODO: Put your GUI onto your frame (using sub-frames if you wish).
+
+    # sprint 1
     forward_dist_button = ttk.Button(frame, text="Go Forward Distance")
     backward_dist_button = ttk.Button(frame, text="Go Backward Distance")
     forward_inches_label = ttk.Label(frame, text="Inches")
@@ -49,6 +51,24 @@ def get_my_frame(root, window, mqtt_sender):
 
     forward_dist_button["command"] = lambda: go_forward(forward_inches, forward_speed, mqtt_sender)
 
+    # sprint 2
+    go_until_distance_button = ttk.Button(frame, text="Go Until")
+    how_close_label = ttk.Label(frame, text='How close?')
+    how_close = ttk.Entry(frame, width=6)
+    tolerance_label = ttk.Label(frame, text='Tolerance')
+    tolerance = ttk.Entry(frame, width=6)
+    speed_m1_label = ttk.Label(frame, text='Speed')
+    speed_m1 = ttk.Entry(frame, width=6)
+
+    go_until_distance_button.grid(row=11, column=0)
+    how_close_label.grid(row=11,column=2)
+    how_close.grid(row=12,column=2)
+    tolerance_label.grid(row=11, column=4)
+    tolerance.grid(row=12, column=4)
+    speed_m1_label.grid(row=11, column=6)
+    speed_m1.grid(row=12, column=6)
+
+    go_until_distance_button["command"] = lambda: go_until_distance(x, delta, speed)
 
     # Return your frame:
     return frame
@@ -77,3 +97,5 @@ def go_forward(forward_inches, forward_speed, mqtt_sender):
     print()
     print('Sending a message to the robot to go forward', inches,'inches forward at a speed of', speed)
     mqtt_sender.send_message('forward',[inches, speed])
+
+def go_until_distance(x, delta, speed)
