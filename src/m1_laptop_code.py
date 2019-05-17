@@ -99,3 +99,6 @@ def go_forward(forward_inches, forward_speed, mqtt_sender):
     mqtt_sender.send_message('forward',[inches, speed])
 
 def go_until_distance(x, delta, speed)
+    print()
+    print('Sending message to the robot to go until', x, '+ or -', delta, 'units from an object.')
+    mqtt_sender.send_message('go_until_dist',[x,delta,speed])
