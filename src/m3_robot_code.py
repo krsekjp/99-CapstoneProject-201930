@@ -44,8 +44,8 @@ class MyRobotDelegate(object):
             ans_deg = self.robot.arm_and_claw.motor.get_position()
             if float(ans_deg) >= 14.2 * 360:
                 self.robot.arm_and_claw.motor.turn_off()
-                self.robot.arm_and_claw.motor.reset_position()
                 break
+        self.robot.arm_and_claw.motor.reset_position()
 
     def arm_to(self, position, speed):
         print_message_received('arm_to', [position])
