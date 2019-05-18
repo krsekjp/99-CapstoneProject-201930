@@ -43,12 +43,35 @@ class MyRobotDelegate(object):
                 break
         self.robot.drive_system.stop()
 
+    def backward(self, inches, speed):
+        print_message_received('backward',[inches, speed])
+        self.robot.drive_system.right_motor.reset_position()
+        self.robot.drive_system.go(speed, speed)
+        while True:
+            print(self.robot.drive_system.right_motor.get_position())
+            if self.robot.drive_system.right_motor.get_position() <= inches*90:
+                break
+        self.robot.drive_system.stop()
+
     def go_until_dist(self, x, delta, speed):
         print_message_received('go_until_dist',[x, delta, speed])
         self.robot.drive_system.go(speed,speed)
         while True:
-            self.robot.sensor_system.ir_proximity_sensor.get_distance_in_inches()
-    # START HERE, THIS IS WHERE YOU LEFT OFF, NEED TO ASK MUTCHLER 
+            five_readings = []
+            for _ in range(5):
+                dist_from = self.robot.sensor_system.ir_proximity_sensor.get_distance()
+                five_readings = five_readings + [dist_from]
+            #print(five_readings)
+            biggest = max(five_readings)
+            smallest = min(five_readings)
+            five_readings.remove(biggest)
+            five_readings.remove(smallest)
+            sum_of_3 = sum(five_readings)
+            av_of_3 = sum_of_3/3
+            print(av_of_3)
+            if av_of_3 <= x+delta:
+                break
+        self.robot.drive_system.stop()
 
 def print_message_received(method_name, arguments):
     print()

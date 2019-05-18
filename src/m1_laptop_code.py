@@ -50,6 +50,7 @@ def get_my_frame(root, window, mqtt_sender):
     backward_speed.grid(row=8, column=4)
 
     forward_dist_button["command"] = lambda: go_forward(forward_inches, forward_speed, mqtt_sender)
+    backward_dist_button["command"] = lambda: go_backward(backward_inches, backward_speed, mqtt_sender)
 
     # sprint 2
     go_until_distance_button = ttk.Button(frame, text="Go Until")
@@ -68,7 +69,7 @@ def get_my_frame(root, window, mqtt_sender):
     speed_m1_label.grid(row=11, column=6)
     speed_m1.grid(row=12, column=6)
 
-    go_until_distance_button["command"] = lambda: go_until_distance(x, delta, speed)
+    go_until_distance_button["command"] = lambda: go_until_distance(how_close, tolerance, speed_m1, mqtt_sender)
 
     # Return your frame:
     return frame
@@ -98,7 +99,12 @@ def go_forward(forward_inches, forward_speed, mqtt_sender):
     print('Sending a message to the robot to go forward', inches,'inches forward at a speed of', speed)
     mqtt_sender.send_message('forward',[inches, speed])
 
-def go_until_distance(x, delta, speed)
+def go_backward(backwar)
+
+def go_until_distance(how_close, tolerance, speed_m1, mqtt_sender):
+    x = int(how_close.get())
+    delta = int(tolerance.get())
+    speed = int(speed_m1.get())
     print()
     print('Sending message to the robot to go until', x, '+ or -', delta, 'units from an object.')
     mqtt_sender.send_message('go_until_dist',[x,delta,speed])
