@@ -99,7 +99,12 @@ def go_forward(forward_inches, forward_speed, mqtt_sender):
     print('Sending a message to the robot to go forward', inches,'inches forward at a speed of', speed)
     mqtt_sender.send_message('forward',[inches, speed])
 
-def go_backward(backwar)
+def go_backward(backward_inches, backward_speed, mqtt_sender):
+    inches = int(backward_inches.get())
+    speed = int(backward_speed.get())
+    print()
+    print('Sending a message to the robot to go backward', inches, 'inches backward at a speed of', speed)
+    mqtt_sender.send_message('backward',[inches, speed])
 
 def go_until_distance(how_close, tolerance, speed_m1, mqtt_sender):
     x = int(how_close.get())

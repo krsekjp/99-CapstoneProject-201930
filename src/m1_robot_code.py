@@ -46,10 +46,10 @@ class MyRobotDelegate(object):
     def backward(self, inches, speed):
         print_message_received('backward',[inches, speed])
         self.robot.drive_system.right_motor.reset_position()
-        self.robot.drive_system.go(speed, speed)
+        self.robot.drive_system.go(-speed, -speed)
         while True:
             print(self.robot.drive_system.right_motor.get_position())
-            if self.robot.drive_system.right_motor.get_position() <= inches*90:
+            if self.robot.drive_system.right_motor.get_position() <= -inches*90:
                 break
         self.robot.drive_system.stop()
 
