@@ -162,7 +162,6 @@ def go(mqtt_sender, direction, left_wheel_speed, right_wheel_speed):
     print("  using wheel motor speeds:", left_wheel_speed, right_wheel_speed)
     mqtt_sender.send_message("go", [left_wheel_speed, right_wheel_speed])
 
-
 def handle_forward(left_entry_box, right_entry_box, mqtt_sender):
     """
     Tells the robot to move using the speeds in the given entry boxes,
@@ -174,7 +173,6 @@ def handle_forward(left_entry_box, right_entry_box, mqtt_sender):
     left = int(left_entry_box.get())
     right = int(right_entry_box.get())
     go(mqtt_sender, "GO FORWARD", left, right)
-
 
 def handle_backward(left_entry_box, right_entry_box, mqtt_sender):
     """
