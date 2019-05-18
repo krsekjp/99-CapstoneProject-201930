@@ -39,13 +39,15 @@ class MyRobotDelegate(object):
     def arm_calibrate(self, speed):
         print_message_received('arm_calibrate', [speed])
         self.arm_up(speed)
+        self.robot.arm_and_claw.motor.reset_position()
         self.robot.arm_and_claw.motor.turn_on(-speed)
         while True:
             ans_deg = self.robot.arm_and_claw.motor.get_position()
-            if float(ans_deg) >= 14.2 * 360:
+            if abs(float(ans_deg)) >= 14.2 * 360:
                 self.robot.arm_and_claw.motor.turn_off()
-                self.robot.arm_and_claw.motor.reset_position()
                 break
+        self.robot.arm_and_claw.motor.reset_position()
+        print('done')
 
     def arm_to(self, position, speed):
         print_message_received('arm_to', [position])
