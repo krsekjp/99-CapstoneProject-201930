@@ -10,7 +10,7 @@ import mqtt_remote_method_calls as mqtt
 import rosebot
 import m2_robot_code as m2
 import m3_robot_code as m3
-
+import math
 
 class MyRobotDelegate(object):
     """
@@ -33,25 +33,58 @@ class MyRobotDelegate(object):
 
     # TODO: Add methods here as needed.
 
-    def spinr(self,right_speed,right_distance):
+    def spinr(self,speed_right,distance_right):
+        print('spinr')
+        speed = speed_right
         self.robot.drive_system.right_motor.reset_position()
-        speed = right_speed
-        self.robot.drive_system.right_motor.turn_on()
-        self.robot.drive_system.go(0,speed)
-        number_rotations = int(self.robot.drive_system.right_motor.get_position())
         while True:
-            if number_rotations >= right_distance:
+            #THIS IS A TEST#print((self.robot.drive_system.right_motor.get_position()))
+            self.robot.drive_system.right_motor.turn_on(-speed_right)
+            self.robot.drive_system.left_motor.turn_on(speed_right)
+            self.robot.drive_system.go(speed, -speed)
+            number_rotations = int(self.robot.drive_system.right_motor.get_position())
+            if (-1*number_rotations) >= (int(distance_right)*4.75):
+                self.robot.drive_system.stop()
                 break
 
-    def spinl(self,left_speed,left_distance):
-        speed = left_speed
+    def spinl(self,speed_left,distance_left):
+        print('spinl')
+        speed = speed_left
         self.robot.drive_system.left_motor.reset_position()
-        self.robot.drive_system.left_motor.turn_on()
-        self.robot.drive_system.go(speed,0)
-        number_rotations = int(self.robot.drive_system.left_motor.get_position())
         while True:
-            if number_rotations >= left_distance:
+            #THIS IS A TEST#print((self.robot.drive_system.left_motor.get_position()))
+            self.robot.drive_system.left_motor.turn_on(-speed_left)
+            self.robot.drive_system.right_motor.turn_on(speed_left)
+            self.robot.drive_system.go(-speed, speed)
+            number_rotations = int(self.robot.drive_system.left_motor.get_position())
+            if (-1*number_rotations) >= (int(distance_left)*4.75):
+                self.robot.drive_system.stop()
                 break
+    def spinf(self,area,speed,delta):
+        print('spin_f')
+        while True:
+            self.robot.drive_system.right_motor.turn_on(-speed)
+            self.robot.drive_system.left_motor.turn_on(speed)
+            self.robot.drive_system.go(speed, -speed)
+            ###THis is a Test###print(self.robot.sensor_system.camera.get_biggest_blob().get_area())
+            object = self.robot.sensor_system.camera.get_biggest_blob()
+            #Test print(object.center.x)
+            if self.robot.sensor_system.camera.get_biggest_blob().get_area() >= area:
+                object = self.robot.sensor_system.camera.get_biggest_blob()
+                if delta <= math.fabs(object.center.x-150):
+                    self.robot.drive_system.stop()
+                    self.Tone()
+                    self.robot.sound_system.speech_maker.speak('You Did it!')
+                    break
+
+
+
+    def Tone(self):
+        print('You did it! Congrats!')
+        self.robot.sound_system.beeper.beep()
+        return
+
+
 
 def print_message_received(method_name, arguments=None):
     print()
@@ -60,5 +93,3 @@ def print_message_received(method_name, arguments=None):
 
 
 # TODO: Add functions here as needed.
-
-

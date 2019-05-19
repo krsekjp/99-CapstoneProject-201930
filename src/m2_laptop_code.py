@@ -57,6 +57,32 @@ def get_my_frame(root, window, mqtt_sender):
     entry_box_right_speed = ttk.Entry(frame)
     entry_box_right_speed.insert(0, '100')
     entry_box_right_speed.grid(row=1, column=1)
+
+##############Spin till facing ###########################
+    spin_facing_button = ttk.Button(frame, text='Spin Till Facing')
+    spin_facing_button.grid(row=5, column=0)
+
+    label_area = ttk.Label(frame, text="Area looking for")
+    label_area.grid(row=7, column=1)
+
+    label_delta = ttk.Label(frame, text="Max Delta Value (smaller the better)")
+    label_delta.grid(row=6, column=1)
+
+    label_speed_finding = ttk.Label(frame, text="Speed (smaller the better)")
+    label_speed_finding.grid(row=8, column=1)
+
+    entry_box_area = ttk.Entry(frame)
+    entry_box_area.grid(row=7, column=0)
+
+    entry_box_delta = ttk.Entry(frame)
+    entry_box_delta.grid(row = 6, column = 0)
+
+    entry_box_speed_finding = ttk.Entry(frame)
+    entry_box_speed_finding.grid(row=8, column=0)
+
+    spin_facing_button['command'] = lambda: spin_facing(entry_box_area,entry_box_speed_finding,entry_box_delta,mqtt_sender)
+
+
 ###########################################################
 
 
@@ -82,15 +108,23 @@ class MyLaptopDelegate(object):
 
 
 # TODO: Add functions here as needed.
-#def spin_left(speed_l,distance_l):
 
 
-def spin_right(right_speed, right_distance):
+def spin_facing(area,speed,delta,mqtt_sender):
+    speed_num = int(speed.get())
+    delta = int(delta.get())
+    area = int(area.get())
+    mqtt_sender.send_message('spinf',[area,speed_num,delta])
+
+
+
+def spin_right(right_speed, right_distance, mqtt_sender):
     speed_right = int(right_speed.get())
-    distance_right = int(right_distance.get())
-    mqtt.send_message('spinr',speed_right,distance_right)
+    distance_right = (right_distance.get())
+    mqtt_sender.send_message('spinr',[speed_right,distance_right])
 
-def spin_left(left_speed, left_distance):
+def spin_left(left_speed, left_distance, mqtt_sender):
     speed_left = int(left_speed.get())
-    distance_left = int(left_distance.get())
-    mqtt.send_message('spinl',speed_left,distance_left)
+    distance_left = (left_distance.get())
+    mqtt_sender.send_message('spinl',[speed_left,distance_left])
+
